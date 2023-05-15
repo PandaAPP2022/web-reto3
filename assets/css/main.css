@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+}
+html {
+    height: 100%;
+    display: flex;
+}
+body, #wrapper {
+    background: #333;
+    flex: 1;
+    display: flex;
+}
+
+header {
+    flex: 2;
+}
+
+main {
+    flex: 5;
+    display: grid;
+    place-items: center;
+    background: lightblue;
+}
+
+section {
+    aspect-ratio: 1/1;
+    padding: 25px;
+    border-radius: 15px;
+    background: #333;
+    display: flex;
+}
+form {
+    flex: 1;
+    display: grid;
+}
+label {
+    color: whitesmoke;
+    display: grid;
+    padding: 15px;
+}
+
+
+
+footer {
+    flex: 1;
+}
+
+@media screen and (orientation:landscape) {
+    #wrapper {
+        flex-direction: column;
+    }
+}
