@@ -1,4 +1,9 @@
 <?php
+/*ERRORES
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);*/
+
 require_once('Session.php');
 $session = new Session();
 
@@ -10,7 +15,8 @@ if (isset($_POST['login'])) {
     if (is_string($res)) header('Location: ../../account.php#datosIncorrectos');
     else {
         foreach ($res as $row) {
-            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido']);
+            $tipo = $db->getTipo($row['tipo']);
+            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido'], $tipo['Denominacion']);
         }
     }
 } else if ($session->getState()) {

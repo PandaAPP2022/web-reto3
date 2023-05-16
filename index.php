@@ -4,8 +4,15 @@ require_once('assets/php/Session.php');
 
 $session = new Session();
 
-
-
+$session->getState();
+$tipo = $session->getTipo();
+if ($tipo == "usuario") {
+    echo '1';
+} else if ($tipo == "administrador") {
+    echo '2';
+} else {
+    echo '3';
+}
 
 /*
 $res = $db->getUser($mail, $pass);

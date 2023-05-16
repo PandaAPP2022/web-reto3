@@ -21,6 +21,7 @@ header {
 main {
     flex: 5;
     display: grid;
+    grid-auto-flow: column dense;
     place-items: center;
     background: lightblue;
 }

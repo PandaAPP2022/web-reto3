@@ -2,6 +2,8 @@
 require_once('assets/php/Session.php');
 $session = new Session();
 
+if ($session->getState()) header('Location: account.php');
+
 require_once('assets/php/DataBase.php');
 $bd = new DataBase();
 

@@ -8,13 +8,17 @@ class Session {
     function getState() {
         return isset($_SESSION['user']);
     }
+    function getTipo() {
+        return $_SESSION['tipo'];
+    }
     
-    function create($id, $mail, $name, $surname) {
+    function create($id, $mail, $name, $surname, $tipo) {
         $_SESSION['id'] = $id;
         echo $id;
         $_SESSION['mail'] = $mail;
         $_SESSION['user'] = $name;
         $_SESSION['surname'] = $surname;
+        $_SESSION['tipo'] = $tipo;
         header('Location: ../../account.php#iniciado');
     }
 
