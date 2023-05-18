@@ -10,10 +10,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <?php
-        require_once('header.php');
-
-        ?>
+        <?php require_once('assets/php/header.php'); ?>
         <main>
             <?php
             

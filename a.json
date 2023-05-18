@@ -1,0 +1,45 @@
+{
+	"status": "Success",
+	"message": "La base obtenida correctamente",
+	"data":
+    [
+		[
+            {
+                "_id": "6464b70485c07402ba36dfcd",
+                "idPregunta": 11,
+                "pregunta": "prueba",
+                "imagen": "Insertar Imagen",
+                "dificultad": "Dificil",
+                "categoria": "informatica",
+                "__v": 0
+            }, {
+                "_id": "6464b8f9073e99df369350f0",
+                "idPregunta": 8,
+                "pregunta": "prueba8",
+                "imagen": "Insertar Imagen",
+                "dificultad": "Media",
+                "categoria": "informatica"
+            }, {
+                "_id": "6464b8fe073e99df369350f1",
+                "idPregunta": 9,
+                "pregunta": "prueba9",
+                "imagen": "Insertar Imagen",
+                "dificultad": "Dificil",
+                "categoria": "informatica"
+            }
+        ],
+        [
+            {
+                "_id": "6464b965073e99df369350f2",
+                "idPregunta": 1,
+                "respuesta": ["Respu 1", "Respu 2", "Respu 3", "Respu 4"],
+                "RespCorrecta": 1
+            }, {
+                "_id": "6464b96f073e99df369350f3",
+                "idPregunta": 2,
+                "respuesta": ["Respu 1", "Respu 2", "Respu 3", "Respu 4"],
+                "RespCorrecta": 1
+            }
+        ]
+    ]
+}
