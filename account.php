@@ -10,12 +10,13 @@
 </head>
 <body>
     <div id="wrapper">
-        <header>
-        </header>
+        <?php
+        require_once('header.php');
+
+        ?>
         <main>
             <?php
-            require_once('assets/php/Session.php');
-            $session = new Session();
+            
             if ($session->getState()) {
                 echo '
                 <section>
@@ -74,7 +75,7 @@
                 </section>';
             }
             ?>
-            <script>
+            <script>/*
                 asd = () => {
                     int d1 = 365;
                     int d2 = 365;
@@ -104,7 +105,7 @@
                             ;;
                         case 4:
                             ;;
-                }
+                }*/
             </script>
         </main>
         <footer>

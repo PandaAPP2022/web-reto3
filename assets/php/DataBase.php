@@ -32,8 +32,9 @@ class DataBase {
   function getRegistro($id) {
     $res = null;
     $sql = 'SELECT Puntuacion, Fecha FROM Registro WHERE idUsuario= ?';
+    $data = array($id);
     try {
-      $res = $this->execute($sql, array($id));
+      $res = $this->execute($sql, $data);
       if (!$res) $res = 'ERROR: No se encontraron registros.';
     } catch (PDOExecption $e) {
       $res = 'ERROR: No hay registros.';
@@ -47,7 +48,7 @@ class DataBase {
     $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
     try {
-      $res = $this->execute($data);
+      $res = $this->execute($sql, $data);
       /*$query = $this->conn->prepare($sql);
       $query->execute(array($mail, $passwd));
       $res = $query->fetchAll();*/
@@ -70,9 +71,9 @@ class DataBase {
   // CREAR
   function createUser($name, $surname, $passwd, $mail, $tipo, $fecha) {
     $sql = "INSERT INTO Usuario (Nombre, Apellido, Contraseña, Email, tipo, fecha) VALUES (?, ?, ?, ?, ?, ?)";
-    $data = array($name, $surname, $passwd $mail, $tipo, $fecha);
+    $data = array($name, $surname, $passwd, $mail, $tipo, $fecha);
     try {
-      $res = $this->execute($data);
+      $res = $this->execute($sql, $data);
       return true;
     } catch(PDOException $e) {
       return false;
@@ -95,7 +96,7 @@ class DataBase {
     $data = array($newPassword, $id);
     try {
       $query = $this->conn->prepare($sql);
-      $query->execute($data);
+      $query->execute($sql, $data);
       return true;
     } catch(PDOException $e) {
       return false;
@@ -117,16 +118,15 @@ class DataBase {
   // TIPO DE USUARIO
   function getTipo($tipo) {
     $res = null;
+    $sql = null;
     if (is_string($tipo)) {
       $sql = "SELECT idTipo FROM TipoUsuario WHERE Denominacion= ?";
     } else {
       $sql = "SELECT Denominacion FROM TipoUsuario WHERE idTipo= ?";
     }
-    
+    $data = array($tipo);
     try {
-      $query = $this->conn->prepare($sql);
-      $query->execute(array($tipo));
-      $res = $query->fetch();
+      $res = $this->execute($sql, $data);
       if (!$res) $res = "ERROR: Tipo no encontrado.";
     } catch(PDOException $e) {
       $res = "ERROR: ".$e->getMessage();

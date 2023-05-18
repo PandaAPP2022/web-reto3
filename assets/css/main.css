@@ -15,7 +15,18 @@ body, #wrapper {
 }
 
 header {
-    flex: 2;
+    display: flex;
+}
+header a {
+    padding: 25px;
+    text-align: center;
+    font-size: larger;
+    text-decoration-line: none;
+    color: whitesmoke;
+    flex: 1;
+}
+header a:hover {
+    background-color: #222;
 }
 
 main {
