@@ -170,7 +170,7 @@ form {
     font-size: larger;
     gap: 10px;
 }
-#singup, #password {
+#singup, #password, #updatePassword {
     display: none;
 }
 label {
