@@ -11,13 +11,13 @@ require_once('DataBase.php');
 $db = new DataBase();
 
 if (isset($_POST['login'])) {
-    $res = $db->getUser($_POST['mail'], $_POST['pass']);
+    $pass = $_POST['pass'];
+    $res = $db->getUser($_POST['mail'], $pass);
     if (is_string($res)) header('Location: ../../account.php#datosIncorrectos');
     else {
         foreach ($res as $row) {
             $tipo = $db->getTipo(intval($row['tipo']))[0]['Denominacion'];
-            //echo $tipo;
-            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido'], $tipo, $row['Contraseña']);
+            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido'], $tipo, $pass);
         }
     }
 } else if ($session->getState()) {

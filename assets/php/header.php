@@ -40,7 +40,7 @@ function getHeader($tipo) {
     }
     
     $header .= '<button><a href="account.php">Cuenta</a></button>';
-    if ($tipo != 'none') $header .= '<button onclick="logout()"><a href="#">Cerrar sesión</a></button>';
+    if ($tipo != 'none') $header .= '<button onclick="logout()"><a href="#logOut">Cerrar sesión</a></button>';
     echo $header .= '</div></header>';
 }
 function userLogOut($tipo) {

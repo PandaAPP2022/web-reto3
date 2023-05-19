@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PanasApp</title>
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/main.css">
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
 </head>
 <body>
@@ -24,7 +26,7 @@
                     <li>¡Usa objetos para no perder vidas!</li>
                     <li>¡Se el mejor en la clasificación!</li>
                 </ul>
-                <img src="portada" alt="">
+                <img src="assets/img/logo.png" alt="">
                 <button>DESCARGAR</button>
             </article>
         </main>

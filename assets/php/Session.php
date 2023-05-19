@@ -14,19 +14,20 @@ class Session {
     
     function create($id, $mail, $name, $surname, $tipo, $passwd) {
         $_SESSION['id'] = $id;
-        echo $id;
         $_SESSION['mail'] = $mail;
         $_SESSION['user'] = $name;
         $_SESSION['surname'] = $surname;
         $_SESSION['tipo'] = $tipo;
         $_SESSION['passwd'] = $passwd;
-        header('Location: ../../account.php#iniciado');
+        if ($tipo == 'gerente') header('Location: ../../users.php');
+        else if ($tipo == 'administrador') header('Location: ../../questions.php');
+        else if ($tipo == 'usuario') header('Location: ../../scores.php');
     }
 
     function destroy() {
         if ($this->getState()) {
             session_destroy();
-            header('Location: ../../account.php#cerrado');
+            header('Location: ../../index.php#cerrado');
         } else {
             header('Location: ../../account.php#noiniciado');
         }

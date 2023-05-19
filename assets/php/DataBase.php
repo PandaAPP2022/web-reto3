@@ -9,15 +9,16 @@ class DataBase {
   private $conn = null;
   
   function __construct() {
-    $servername = "192.168.0.129";
+    // $servername = "192.168.0.129"; // CLASE
+    $servername = "192.168.1.137"; // CASA
     $username = "admin";
-    $password = "Almi123";
+    //$password = "Almi123"; // CLASE
+    $password = "Almi123+"; // CASA
     $db = "photoplay";
     
     try {
       $this->conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      echo "Connected";
     } catch(PDOException $e) {
       echo "Connection failed: " . $e->getMessage();
     }
@@ -45,13 +46,11 @@ class DataBase {
   /***** USUARIOS *****/
   function getUser($mail, $passwd) {
     $res = null;
-    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha, Contraseña FROM Usuario WHERE Email= ? AND Contraseña= ?';
+    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contrasena= ?';
+    //$sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
     try {
       $res = $this->execute($sql, $data);
-      /*$query = $this->conn->prepare($sql);
-      $query->execute(array($mail, $passwd));
-      $res = $query->fetchAll();*/
       if (!$res) $res = "ERROR: Usuario no encontrado.";
     } catch(PDOException $e) {
       $res = "ERROR: ".$e->getMessage();

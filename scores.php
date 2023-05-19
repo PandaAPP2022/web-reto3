@@ -11,7 +11,16 @@
     <script src="assets/js/main.js"></script>
 </head>
 <body>
-    <h1>Not Found</h1>
-    <p>The requested URL was not found on this server.</p>
+    
+    <div id="wrapper">
+
+        <?php require_once('assets/php/header.php'); ?>
+
+        <main>
+            <h3>PUNTUACIONES</h3>
+        </main>
+
+    </div>
+
 </body>
 </html>

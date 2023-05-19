@@ -1,9 +1,19 @@
 window.onload = () => {
-    let btnHeader = document.getElementsByClassName('header-display')[0]
+    let btnHeader = $('.header-display')[0]
     btnHeader.addEventListener('click', displayMenu)
     let passButton = document.getElementById('passButton')
-    passButton.addEventListener('click', updatePassword)
+    if (typeof (passButton) != 'undefined' && passButton != null) passButton.addEventListener('click', updatePassword);
+    currentPage()
 }
+
+currentPage = () => {
+    const url = window.location.href
+    const header = $('.headerContainer')[0].children
+    for (const btn of header) {
+        if (url.includes(btn.firstChild.href)) btn.classList.add('currentPage');
+    }
+}
+
 function displayMenu() {
     
     var img = 'assets/img/'
@@ -16,7 +26,7 @@ function displayMenu() {
     this.src = img
     this.style.padding = padding
 
-    const header = document.getElementsByClassName('header')[0]
+    const header = $('.header')[0]
     if (header.style.display != 'flex') {
         header.style.display = 'flex';
     } else {
@@ -24,21 +34,21 @@ function displayMenu() {
     }
 }
 
-function logout() {
-    document.getElementById('logout').click();
+logout = () => {
+    $('#logout').click();
 }
 
-function updatePassword() {
+updatePassword = () => {
     let passwd = prompt("Please enter your old password", "Cambio de contraseña");
     if (passwd != null) {
-        document.getElementById('updatePassword').click();
-        document.getElementById('oldPassword').value = passwd
+        $('#updatePassword').click();
+        $('#oldPassword').value = passwd
     } else {
         alert('Tienes que introducir tu contraseña.');
     }
 }
 
-function toggleFormLogged(btn) {
+toggleFormLogged = (btn) => {
     const account = document.getElementById('account')
     const password = document.getElementById('password')
     if (btn.innerText == "Cambiar contraseña") {
@@ -52,9 +62,9 @@ function toggleFormLogged(btn) {
     }
 }
 
-function toggleForm(btn) {
-    const login = document.getElementById('login')
-    const singup = document.getElementById('singup')
+toggleForm = (btn) => {
+    const login = $('#login')
+    const singup = $('#singup')
     if (btn.innerText == "Registrarse") {
         btn.innerText = "Iniciar sesión"
         login.style.display = 'none'

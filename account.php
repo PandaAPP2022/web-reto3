@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PanasApp</title>
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/main.css">
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
 </head>
 <body>
@@ -26,9 +28,6 @@
                             <label>Apellido:
                                 <input type="text" name="surname" placeholder="Apellido">
                             </label>
-                            <label>Contraseña:
-                                <input placeholder="myAwesomePassword" type="password" name="pass">
-                            </label>
                             <label>Correo:
                                 <input placeholder="usuario@gmail.com" required type="email" name="mail">
                             </label>
@@ -36,7 +35,7 @@
                                 <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
                             </label>
                             <label>
-                                <input class="button" type="submit" name="registro" value="Crear cuenta">
+                                <input class="button" type="submit" name="update" value="Guardar">
                             </label>
                         </form>
                     </article>
