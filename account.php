@@ -13,62 +13,92 @@
         <?php require_once('assets/php/header.php'); ?>
         <main>
             <?php
-            
             if ($session->getState()) {
                 echo '
                 <section>
-                    <form action="assets/php/requests.php" method="post">
-                        <label>
-                            Nueva contraseña:
-                            <input type="password" name="pass1">
-                        </label>
-                        <label>
-                            Escribe de nuevo la contraseña:
-                            <input type="password" name="pass2">
-                        </label>
-                        <input type="submit" name="updatePassword" value="Cambiar contraseña">
-                        <input type="submit" name="logout" value="Cerrar sesión">
-                    </form>
+                    <button id="toggle" onclick="toggleFormLogged(this)">Cambiar contraseña</button>
+                    <article id="account">
+                        <form action="assets/php/requests.php" method="post">
+                            <h3>Editar información</h3>
+                            <label>Nombre:
+                                <input tupe="text" name="name" placeholder="Usuario">
+                            </label>
+                            <label>Apellido:
+                                <input type="text" name="surname" placeholder="Apellido">
+                            </label>
+                            <label>Contraseña:
+                                <input placeholder="myAwesomePassword" type="password" name="pass">
+                            </label>
+                            <label>Correo:
+                                <input placeholder="usuario@gmail.com" required type="email" name="mail">
+                            </label>
+                            <label>Fecha de nacimiento:
+                                <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
+                            </label>
+                            <label>
+                                <input class="button" type="submit" name="registro" value="Crear cuenta">
+                            </label>
+                        </form>
+                    </article>
+                    <article id="password">
+                        <form action="assets/php/requests.php" method="post">
+                            <h3>Cambiar contraseña</h3>
+                            <label>
+                                Nueva contraseña:
+                                <input required type="password" name="pass1">
+                            </label>
+                            <label>
+                                Escribe de nuevo:
+                                <input required type="password" name="pass2">
+                            </label>
+                            <input id="passButton" class="button" type="button" value="Cambiar contraseña">
+                            <input id="updatePassword" type="submit" name="updatePassword">
+                            <input id="oldPassword" type="hidden" name="oldPassword">
+                        </form>
+                    </article>
                 </section>';
             } else {
                 echo '
                 <section>
-                    <form action="assets/php/requests.php" method="post">
-                        <label>Iniciar sesión</label>
-                        <label>Correo:
-                            <input type="email" name="mail" id="" value="ppaquensen@gmail.com">
-                        </label>
-                        <label>Contraseña:
-                            <input type="password" name="pass" id="" value="almi123">
-                        </label>
-                        <label>
-                            <input type="submit" name="login" value="Iniciar sesión">
-                        </label>
-                    </form>
-                </section>
-                <section>
-                    <!--$name, $surname, $passwd, $mail, $tipo, $fecha-->
-                    <form action="assets/php/requests.php" method="post">
-                        <label>Registro</label>
-                        <label>Nombre:
-                            <input tupe="text" name="name" placeholder="Usuario">
-                        </label>
-                        <label>Apellido:
-                            <input type="text" name="surname" placeholder="Apellido">
-                        </label>
-                        <label>Contraseña:
-                            <input type="password" name="pass">
-                        </label>
-                        <label>Correo:
-                            <input required type="email" name="mail" id="">
-                        </label>
-                        <label>Fecha de nacimiento:
-                            <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
-                        </label>
-                        <label>
-                            <input type="submit" name="registro" value="Crear cuenta">
-                        </label>
-                    </form>
+                    <button id="toggle" onclick="toggleForm(this)">Registrarse</button>
+                    <article id="login">
+                        <form action="assets/php/requests.php" method="post">
+                            <h3>Iniciar sesión</h3>
+                            <label>Correo:
+                                <input type="email" name="mail" value="ppaquensen@gmail.com">
+                            </label>
+                            <label>Contraseña:
+                                <input type="password" name="pass" value="almi123">
+                            </label>
+                            <label>
+                                <input class="button" type="submit" name="login" value="Iniciar">
+                            </label>
+                        </form>
+                    </article>
+                    <article id="singup">
+                        <!--$name, $surname, $passwd, $mail, $tipo, $fecha-->
+                        <form action="assets/php/requests.php" method="post">
+                            <h3>Registro</h3>
+                            <label>Nombre:
+                                <input tupe="text" name="name" placeholder="Usuario">
+                            </label>
+                            <label>Apellido:
+                                <input type="text" name="surname" placeholder="Apellido">
+                            </label>
+                            <label>Contraseña:
+                                <input placeholder="myAwesomePassword" type="password" name="pass">
+                            </label>
+                            <label>Correo:
+                                <input placeholder="usuario@gmail.com" required type="email" name="mail" id="">
+                            </label>
+                            <label>Fecha de nacimiento:
+                                <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
+                            </label>
+                            <label>
+                                <input class="button" type="submit" name="registro" value="Crear cuenta">
+                            </label>
+                        </form>
+                    </article>
                 </section>';
             }
             ?>

@@ -45,7 +45,7 @@ class DataBase {
   /***** USUARIOS *****/
   function getUser($mail, $passwd) {
     $res = null;
-    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
+    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha, Contraseña FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
     try {
       $res = $this->execute($sql, $data);

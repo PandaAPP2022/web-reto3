@@ -13,36 +13,21 @@
     <div id="wrapper">
 
         <?php require_once('assets/php/header.php'); ?>
+
         <main>
-            <section>
-                <article>
-                    <h3>PannasApp ¡El Quizz Definitivo!</h3>
-                    <p>TEXTO</p>
-                    <img src="portada" alt="">
-                    <button>DESCARGAR</button>
-                </article>
-                <article></article>
-                <article></article>
-                <article></article>
-            </section>
-            <?php
-            /*
-            $res = $db->getUser($mail, $pass);
-            if (is_string($res)) {
-                echo $res;
-            } else {
-                foreach ($res as $row) {
-                    echo '<br>';
-                    echo $row['idUsuario'] ."\t";
-                    print $row['Nombre'] . "\t";
-                    echo $row['Apellido'];
-                }
-            }*/
-            ?>
+            <article class="indexLayout">
+                <h3>PannasApp ¡El Quizz Definitivo!</h3>
+                <ul>
+                    <li>Elige el idioma que quieras</li>
+                    <li>¡Más de 300 preguntas!</li>
+                    <li>Dificultad aleatoria</li>
+                    <li>¡Usa objetos para no perder vidas!</li>
+                    <li>¡Se el mejor en la clasificación!</li>
+                </ul>
+                <img src="portada" alt="">
+                <button>DESCARGAR</button>
+            </article>
         </main>
-        <footer>
-            <p>Copyright</p>
-        </footer>
 
     </div>
 

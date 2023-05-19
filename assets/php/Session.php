@@ -12,13 +12,14 @@ class Session {
         return $_SESSION['tipo'];
     }
     
-    function create($id, $mail, $name, $surname, $tipo) {
+    function create($id, $mail, $name, $surname, $tipo, $passwd) {
         $_SESSION['id'] = $id;
         echo $id;
         $_SESSION['mail'] = $mail;
         $_SESSION['user'] = $name;
         $_SESSION['surname'] = $surname;
         $_SESSION['tipo'] = $tipo;
+        $_SESSION['passwd'] = $passwd;
         header('Location: ../../account.php#iniciado');
     }
 

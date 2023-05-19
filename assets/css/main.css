@@ -34,9 +34,6 @@ body {
     flex-direction: column;
 }
 
-footer {
-    background: #555;
-}
 header {
     background: white;
 }
@@ -46,115 +43,171 @@ header {
     z-index: 10;
     position: fixed;
     inset: 25px 25px auto auto;
-    width: 50px;
-    border-radius: 10px;
+    width: 75px;
     aspect-ratio: 1/1;
-    box-shadow: 0px 0px 0px 2.5px black inset;
-    -webkit-box-shadow: 0px 0px 0px 2.5px black inset;
-    -moz-box-shadow: 0px 0px 0px 2.5px black inset;
-    background-color: #555;
     cursor: pointer;
 }
-.header-display:hover {
-    background: #444;
-}
 header .icon {
-    height: 100%;
-    padding: 25px;
+    place-self: center;
+    padding: 10px;
+    max-height: 110px;
     aspect-ratio: 1/1;
 }
+
+.headerContainer {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center center;
+}
 header a {
-    padding: 25px;
+    padding: 10px 25px;
     display: grid;
     text-align: center;
     place-items: center;
     font-size: larger;
     text-decoration-line: none;
-    color: black;
     flex: 1;
 }
-header a:hover {
-    background-color: #444;
+button:hover, .button:hover {
+    background: #4851a1;
 }
 
 /***** MAIN *****/
 main {
+    background-image: url(../img/fondo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     flex: 5;
     display: grid;
     grid-auto-flow: column dense;
     place-items: center;
-    background: #454fac;
 }
 
 section {
-    /*
-    aspect-ratio: 1/1;
-    padding: 25px;*/
-    width: 90%;
-    height: 90%;
-    border-radius: 25px;
-    background: #333;
-    background: #636fd7;
     display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+    gap: 25px;
 }
+
+
 article {
-    display: grid;
-    grid-template-columns: repeat(1, 2, 1fr);
-    place-items: center;
+    flex: 1;
+    background: #636fd7;
 }
+#toggle {
+    padding: 10px;
+    width: fit-content;
+    place-self: center;
+}
+
+.indexLayout {
+    border-radius: 25px;
+    max-width: 90%;
+    padding: 25px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.indexLayout h3 {
+    grid-area: 1 / 1 / 2 / 5;
+    font-size: xx-large;
+}
+.indexLayout ul {
+    grid-area: 2 / 1 / 3 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    list-style-type: circle;
+    order: 2;
+}
+.indexLayout li {
+    flex: 1;
+    font-size: large;
+}
+.indexLayout img { grid-area: 2 / 3 / 3 / 5;  }
+.indexLayout button {
+    grid-area: 3 / 4 / 4 / 5;
+    place-self: center center;
+    order: 2;
+}
+
 article img {
     width: 500px;
     aspect-ratio: 3/2;
     background: #454fac;
 }
-article button {
+button, .button {
     cursor: pointer;
     font-size: large;
-    padding: 10px 20px;
     border: 3px solid black;
     border-radius: 10px;
-    background: #555fbd;
+    background: #545fbd;
 }
+
+.button {
+    width: max-content;
+    color: white;
+    min-height: 40px;
+    min-width: 80px;
+}
+
+.indexLayout button { padding: 10px 20px; }
+
 form {
     flex: 1;
     display: grid;
     overflow-y: auto;
+    place-items: center;
+    padding: 15px;
+    font-size: larger;
+    gap: 10px;
+}
+#singup, #password {
+    display: none;
 }
 label {
     color: whitesmoke;
     display: grid;
-    padding: 15px;
 }
 form input {
-    min-height: 20px;
-    height: max-content;
+    height: 25px;
+    padding: 0 10px;
     color: black;
-    background: whitesmoke;
+    background: white;
     overflow: auto;
-}
-
-
-/***** FOOTER ****/
-footer {
-    display: grid;
-    place-items: center;
-    padding: 5px;
 }
 
 
 /********** RESPONSIVE **********/
 /***** COMPUTER *****/
 @media screen and (orientation:landscape) {
-    /* CONTAINER
-    #wrapper {
-        flex-direction: column;
-    }*/
     /*** HEADER ***/
     .header-display {
         display: none;
     }
     header {
         display: flex!important;
+    }
+    .headerContainer {
+        grid-auto-flow: column dense;
+        padding: 25px 0;
+    }
+    .indexLayout {
+        display: grid;
+        padding: 0 25px 0 0;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr 2fr 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        place-items: center;
     }
 }
 /***** PHONE *****/
@@ -166,5 +219,10 @@ footer {
         position: fixed;
         inset: 0;
         flex-direction: column;
+        background: rgb(54, 64, 160);
+    }
+    header button {
+        font-size: xx-large;
+        background: #6c76d6;
     }
 }

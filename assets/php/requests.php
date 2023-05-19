@@ -17,28 +17,40 @@ if (isset($_POST['login'])) {
         foreach ($res as $row) {
             $tipo = $db->getTipo(intval($row['tipo']))[0]['Denominacion'];
             //echo $tipo;
-            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido'], $tipo);
+            $session->create($row['idUsuario'], $_POST['mail'], $row['Nombre'], $row['Apellido'], $tipo, $row['Contraseña']);
         }
     }
 } else if ($session->getState()) {
     if (isset($_POST['logout'])) {
         $session->destroy();
     } else if (isset($_POST['updatePassword'])) {
-        $newPassword = $_POST['pass1'];
-        $newPassword2 = $_POST['pass2'];
-        if (strlen($newPassword) < 1) {
-            header('Location: ../../account.php#faltaNuevaContraseña');
-        } else if ($newPassword != $newPassword2) {
-            header('Location: ../../account.php#contraseñasNoIguales');
+        $oldPassword = $_POST['oldPassword'];
+
+        if ($oldPassword != $_SESSION['passwd']) {
+            //header('Location: ../../account.php#oldPassError');
         } else {
-            $id = $session->getId();
-            $updated = $db->updatePassword($id, $newPassword);
-            if ($updated) {
-                header('Location: ../../account.php#actualizado');
+        }
+        //echo $oldPassword;
+        echo $_SESSION['passwd'];
+        die();
+        if (true == false) {
+            $newPassword = $_POST['pass1'];
+            $newPassword2 = $_POST['pass2'];
+            if (strlen($newPassword) < 1) {
+                header('Location: ../../account.php#faltaNuevaContraseña');
+            } else if ($newPassword != $newPassword2) {
+                header('Location: ../../account.php#contraseñasNoIguales');
             } else {
-                header('Location: ../../account.php#errorActualizando');
+                $id = $session->getId();
+                $updated = $db->updatePassword($id, $newPassword);
+                if ($updated) {
+                    header('Location: ../../account.php#actualizado');
+                } else {
+                    header('Location: ../../account.php#errorActualizando');
+                }
             }
         }
+
     }
 } else {
     header('Location: ../../account.php#noIniciado');

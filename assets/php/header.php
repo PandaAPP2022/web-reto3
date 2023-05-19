@@ -25,26 +25,38 @@ function userAllowed($user)
 }
 
 function getHeader($tipo) {
-    $header = '<img class="header-display" src="assets/img/menu.svg">
+    $header = '<img class="header-display" src="assets/img/logo.png">
     <header class="header">
-    <img class="icon"> <a href="index.php">Inicio</a>';
+        <img class="icon" src="assets/img/logo.png">
+        <div class="headerContainer">
+            <button><a href="index.php">Inicio</a></button>';
     if ($tipo == 'gerente') {
-        $header .= '<a href="users.php">Usuarios</a>';
-        $header .= '<a href="questions.php">Preguntas</a>';
+        $header .= '<button><a href="users.php">Usuarios</a></button>';
+        $header .= '<button><a href="questions.php">Preguntas</a></button>';
     } else if ($tipo == 'administrador') {
-        $header .= '<a href="questions.php">Preguntas</a>';
+        $header .= '<button><a href="questions.php">Preguntas</a></button>';
     } else if ($tipo == 'usuario') {
-        $header .= '<a href="scores.php">Puntuaciones</a>';
+        $header .= '<button><a href="scores.php">Puntuaciones</a></button>';
     }
     
-    echo $header .= '<a href="account.php">Cuenta</a></header>';
+    $header .= '<button><a href="account.php">Cuenta</a></button>';
+    if ($tipo != 'none') $header .= '<button onclick="logout()"><a href="#">Cerrar sesión</a></button>';
+    echo $header .= '</div></header>';
+}
+function userLogOut($tipo) {
+    if ($tipo != 'none') {
+        echo '
+        <form style="display: none;" action="assets/php/requests.php" method="post">
+            <input id="logout" type="submit" name="logout">
+        </form>';
+    }
 }
 
 $tipo = $state ? $session->getTipo() : 'none';
-//$tipo = 'none';
-//if ($state) $tipo = $session->getTipo();
 
 userAllowed($tipo);
 getHeader($tipo);
+userLogOut($tipo);
+
 
 ?>
