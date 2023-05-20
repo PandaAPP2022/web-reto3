@@ -16,15 +16,8 @@ currentPage = () => {
 
 function displayMenu() {
     
-    var img = 'assets/img/'
-    let padding = 0;
-    if (!this.src.includes('closemenu')) {
-        img += 'closemenu.svg';
-        padding = '5px';
-    } else img += 'logo.png';
-
-    this.src = img
-    this.style.padding = padding
+    if (this.src.includes('logo')) this.src = 'assets/img/closemenu.png';
+    else this.src = 'assets/img/logo.png';
 
     const header = $('.header')[0]
     if (header.style.display != 'flex') {
