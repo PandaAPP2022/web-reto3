@@ -92,40 +92,85 @@ section {
     max-height: 100%;
     gap: 25px;
 }
-section.users {
+section.list {
     max-height: 85%;
     overflow-y: auto;
     display: grid;
-    
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-rows: fit-content(100px);
+    max-width: 900px;
     background: #636fd7;
     padding: 25px;
     border-radius: 25px;
 }
-section.users > h3 {
+
+section.list > h3 {
     text-align: center;
     place-self: center;
 }
-article.user {
+article.list-item {
     flex: unset;
-    min-height: 33%;
+    min-height: 100px;
+    max-width: 400px;
     display: flex!important;
-    flex-direction: column;
     background: #454fac;
-    padding: 25px;
+    padding: 0 10px;
     border-radius: 25px;
 }
+.list-item.score {
+    align-items: center;
+    justify-content: space-around;
+}
+.ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+}
+.ctn aside {
+    display: grid;
+    gap: 5px;
+    place-items: center;
+}
 
+#nombre {
+    background: white;
+    color: black;
+}
+.info {
+    flex: 1;
+    padding: 10px 0;
+    justify-content: space-evenly;
+}
+.info, .options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.options {
+    align-items: center;
+}
+.icons {
+    width: 30px!important;
+    height: 30px!important;
+    cursor: pointer;
+}
 
 article {
     flex: 1;
     background: #636fd7;
 }
-#toggle {
+#toggle, #deleteSelf {
     padding: 10px;
     width: fit-content;
     place-self: center;
+}
+#deleteSelf {
+    background: rgb(180, 50, 50);
+}
+#deleteSelf:hover {
+    background: rgb(150, 50, 50);
 }
 
 .indexLayout {
@@ -195,14 +240,17 @@ form {
     font-size: larger;
     gap: 10px;
 }
-#singup, #password, #updatePassword {
+#singup, #password, #updatePassword, #delete {
     display: none;
 }
 label {
     color: whitesmoke;
     display: grid;
 }
-form input {
+label .button {
+    place-self: center;
+}
+form input, .ctn aside input {
     height: 25px;
     padding: 0 10px;
     color: black;
@@ -212,6 +260,12 @@ form input {
 
 
 /********** RESPONSIVE **********/
+/***** FIREFOX *****/
+@-moz-document url-prefix() {
+    section.list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 /***** COMPUTER *****/
 @media screen and (orientation:landscape) {
     /*** HEADER ***/
@@ -249,5 +303,16 @@ form input {
     header button {
         font-size: xx-large;
         background: #6c76d6;
+    }
+
+    section.list {
+        max-width: 600px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))!important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    section.list {
+        max-width: 300px;
     }
 }

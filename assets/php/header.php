@@ -9,18 +9,18 @@ require_once('Session.php');
 $session = new Session();
 $state = $session->getState();
 
-function userAllowed($user)
-{
+function userAllowed($user) {
+
     $url = $_SERVER['REQUEST_URI'];
 
     if ($user == 'gerente') {
         if (strpos($url, 'scores')) header('Location: index.php?missing');
     } else if ($user == 'administrador') {
-        if (strpos($url, 'users') || strpos($url, 'scores')) header('Location: index.php?missing');
+        if (strpos($url, 'user') || strpos($url, 'scores')) header('Location: index.php?missing');
     } else if ($user == 'usuario') {
-        if (strpos($url, 'users') || strpos($url, 'questions')) header('Location: index.php?missing');
+        if (strpos($url, 'user') || strpos($url, 'question')) header('Location: index.php?missing');
     } else {
-        if (strpos($url, 'users') || strpos($url, 'questions') || strpos($url, 'scores')) header('Location: index.php?missing');
+        if (strpos($url, 'user') || strpos($url, 'question') || strpos($url, 'scores')) header('Location: index.php?missing');
     }
 }
 

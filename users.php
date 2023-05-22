@@ -16,46 +16,23 @@
 
         <?php require_once('assets/php/header.php'); ?>
 
-        <main>
+        <main class='ctn'>
 
-            <section class="users">
-                <?php
-                require_once('assets/php/DataBase.php');
-                $bd = new DataBase();
+            <aside>
+                <h3>Búsqueda:</h3>
+                <input id="nombre" placeholder="gerente" type="text" name="" id="">
+            </aside>
 
-                function asd($bd) {
-                    $res = $bd->getUsers();
-                    foreach ($res as $row) {
-                        $tipo = $bd->getTipo(intval($row['tipo']))[0]['Denominacion'];
-                        echo '
-                        <article class="user">
-                            <h3>'. $row['Nombre'] ." ". $row['Apellido'] . "</h3>
-                            <p>". $row['Email'] . "</p>
-                            <span class='tipo'>". $tipo . '</span>
-                        </article>';
-                    }                    
-                }
-                
-                $res = $bd->getUsers();
-                if (is_string($res)) {
-                    echo $res;
-                } else {
-                    foreach ($res as $row) {
-                        $tipo = $bd->getTipo(intval($row['tipo']))[0]['Denominacion'];
-                        echo '
-                        <article class="user">
-                            <h3>'. $row['Nombre'] ." ". $row['Apellido'] . "</h3>
-                            <p>". $row['Email'] . "</p>
-                            <span class='tipo'>". $tipo . '</span>
-                        </article>';
-                    }
-                    asd($bd);
-                    asd($bd);
-                    asd($bd);
-                    
-                }
-                ?>
-            </section>
+            <section class="list"></section>
+
+            <form id="delete" action="assets/php/requests.php" method="post">
+                <input id="btnDelete"  type="submit" name="deleteUser">
+            </form>
+            
+            <script type="text/javascript">
+                $('#nombre').keyup(function(e) { requestUsers(this.value) } );
+                requestUsers("");
+            </script>
         </main>
 
     </div>

@@ -44,11 +44,14 @@ class DataBase {
   }
 
   /***** USUARIOS *****/
-  function getUser($mail, $passwd) {
+  function getUser($id, $mail, $passwd) {
     $res = null;
     $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contrasena= ?';
-    //$sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
+    if ($id != null) {
+      $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE idUsuario= ?';
+      $data = array($id);
+    }
     try {
       $res = $this->execute($sql, $data);
       if (!$res) $res = "ERROR: Usuario no encontrado.";
@@ -61,6 +64,31 @@ class DataBase {
     $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario';
     try {
       return $this->conn->query($sql, PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+      return "ERROR:" . $e->getMessage();
+    }
+  }
+
+  function getFilteredUsers($input) {
+    $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario';
+    $data = null;
+    if ($input != "") {
+      
+      $tipo = 0;
+      if ($input == 'gerente%') $tipo = 1;
+      else if ($input == 'administrador%') $tipo = 2;
+      else if ($input == 'usuario%') $tipo = 3;
+      
+      if ($tipo == 0) {
+        $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE Nombre LIKE ? OR Apellido LIKE ? OR Email LIKE ?';
+        $data = array($input, $input, $input);
+      } else {
+        $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE Nombre LIKE ? OR Apellido LIKE ? OR Email LIKE ? OR tipo LIKE ?';
+        $data = array($input, $input, $input, $tipo);
+      }
+    }
+    try {
+        return $this->execute($sql, $data);
     } catch(PDOException $e) {
       return "ERROR:" . $e->getMessage();
     }
@@ -79,11 +107,11 @@ class DataBase {
     }
   }
   // EDITAR DATOS
-  function updateUser($id, $name, $surname, $mail, $tipo, $fecha) {
-    $sql = "UPDATE Usuario SET Nombre= ?, Apellido= ?, Email= ?, tipo= ?, fecha= ? WHERE idUsuario= ?";
+  function updateUser($id, $name, $surname, $mail, $fecha) {
+    $sql = "UPDATE Usuario SET Nombre= ?, Apellido= ?, Email= ?, fecha= ? WHERE idUsuario= ?";
     try {
       $query = $this->conn->prepare($sql);
-      $query->execute(array($name, $surname, $mail, $tipo, $fecha, $id));
+      $query->execute(array($name, $surname, $mail, $fecha, $id));
       return true;
     } catch (PDOException $e) {
       return false;
@@ -92,22 +120,21 @@ class DataBase {
   // EDITAR CONTRASEÑA
   function updatePassword($id, $newPassword) {
     $sql = "UPDATE Usuario SET Contraseña= ? WHERE idUsuario= ?";
+    $sql = "UPDATE Usuario SET Contrasena= ? WHERE idUsuario= ?";
     $data = array($newPassword, $id);
     try {
-      $query = $this->conn->prepare($sql);
-      $query->execute($sql, $data);
-      return true;
+      $this->execute($sql, $data);
     } catch(PDOException $e) {
-      return false;
     }
+    return true;
   }
 
   // BORRAR
-  function deleteUser($id, $passwd) {
-    $sql = "DELETE FROM Usuario WHERE idUsuario= ? AND Contraseña= ?";
+  function deleteUser($id) {
+    $sql = "DELETE FROM Usuario WHERE idUsuario= ?";
+    $data = array($id);
     try {
-      $query = $this->conn->prepare($sql);
-      $query->execute(array($id, $passwd));
+      $this->execute($sql, $data);
       return true;
     } catch(PDOException $e) {
       return false;
@@ -132,6 +159,20 @@ class DataBase {
     }
     return $res;
   }
+
+  /***** PUNTUACIONES *****/
+  function getScores() {
+    $sql = 'SELECT Usuario.idUsuario, Usuario.Nombre, Usuario.Apellido, Registro.Puntuacion, Registro.Fecha
+        FROM Usuario
+        INNER JOIN Registro ON Usuario.idUsuario = Registro.idUsuario
+        ORDER BY Registro.Puntuacion DESC';
+    try {
+      return $this->conn->query($sql, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      return "ERROR: ".$e->getMessage();
+    }
+  }
+
 
   // CERRAR CONEXIÓN
   function close() {

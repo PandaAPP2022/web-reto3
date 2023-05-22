@@ -16,8 +16,12 @@
 
         <?php require_once('assets/php/header.php'); ?>
 
-        <main>
-            <h3>PUNTUACIONES</h3>
+        <main class='ctn'>
+
+            <section class="list"></section>
+            
+            <script type="text/javascript">loadScores("");</script>
+        
         </main>
 
     </div>

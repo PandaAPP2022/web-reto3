@@ -11,6 +11,9 @@ class Session {
     function getTipo() {
         return $_SESSION['tipo'];
     }
+    function setPass($new) {
+        $_SESSION['passwd'] = $new;
+    }
     
     function create($id, $mail, $name, $surname, $tipo, $passwd) {
         $_SESSION['id'] = $id;
