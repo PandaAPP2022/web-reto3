@@ -9,11 +9,11 @@ class DataBase {
   private $conn = null;
   
   function __construct() {
-    // $servername = "192.168.0.129"; // CLASE
-    $servername = "192.168.1.137"; // CASA
+    $servername = "192.168.0.129"; // CLASE
+    //$servername = "192.168.1.137"; // CASA
     $username = "admin";
-    //$password = "Almi123"; // CLASE
-    $password = "Almi123+"; // CASA
+    $password = "Almi123"; // CLASE
+    //$password = "Almi123+"; // CASA
     $db = "photoplay";
     
     try {
@@ -46,7 +46,7 @@ class DataBase {
   /***** USUARIOS *****/
   function getUser($id, $mail, $passwd) {
     $res = null;
-    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contrasena= ?';
+    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
     if ($id != null) {
       $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE idUsuario= ?';
@@ -100,10 +100,11 @@ class DataBase {
     $sql = "INSERT INTO Usuario (Nombre, Apellido, Contraseña, Email, tipo, fecha) VALUES (?, ?, ?, ?, ?, ?)";
     $data = array($name, $surname, $passwd, $mail, $tipo, $fecha);
     try {
-      $res = $this->execute($sql, $data);
+      $query = $this->conn->prepare($sql);
+      $query->execute($data);
       return true;
     } catch(PDOException $e) {
-      return false;
+      return $e;
     }
   }
   // EDITAR DATOS
@@ -120,7 +121,6 @@ class DataBase {
   // EDITAR CONTRASEÑA
   function updatePassword($id, $newPassword) {
     $sql = "UPDATE Usuario SET Contraseña= ? WHERE idUsuario= ?";
-    $sql = "UPDATE Usuario SET Contrasena= ? WHERE idUsuario= ?";
     $data = array($newPassword, $id);
     try {
       $this->execute($sql, $data);
@@ -130,16 +130,31 @@ class DataBase {
   }
 
   // BORRAR
+  function deleteUserScores($id) {
+    $sql = "DELETE FROM Registro WHERE idUsuario= ?";
+    $data = array(intval($id));
+    try {
+      $query = $this->conn->prepare($sql);
+      $query->execute($data);
+      return true;
+    } catch (PDOException $e) {
+      return $e;
+    }
+  }
+
   function deleteUser($id) {
+    $this->deleteUserScores($id);
     $sql = "DELETE FROM Usuario WHERE idUsuario= ?";
     $data = array($id);
     try {
-      $this->execute($sql, $data);
+      $query = $this->conn->prepare($sql);
+      $query->execute($data);
       return true;
     } catch(PDOException $e) {
       return false;
     }
   }
+
 
   // TIPO DE USUARIO
   function getTipo($tipo) {

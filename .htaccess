@@ -1,1 +1,2 @@
 ErrorDocument 404 /404.php
+Header set Access-Control-Allow-Origin "*"

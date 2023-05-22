@@ -10,6 +10,28 @@ $session = new Session();
 require_once('DataBase.php');
 $db = new DataBase();
 
+if (isset($_POST['createUser'])) {
+    $tipo = intval($_POST['tipo']);
+    $pass = $_POST['pass'];
+    if (!preg_match('~[0-9]+~', $pass)) {
+        if ($tipo == 2) {
+            header('Location: ../../user.php#passNeedsNum');
+        } else {
+            header('Location: ../../account.php#passNeedsNum');
+        }
+        die();
+    }
+    $res = $db->createUser($_POST['name'], $_POST['surname'], $pass, $_POST['mail'], $tipo, $_POST['fecha']);
+    if ($res) {
+        if ($tipo == 2) {
+            header('Location: ../../users.php#usuarioCreado');
+        }  else {
+            header('Location: ../../account.php#usuarioCreado');
+        }
+    }
+    die();
+}
+
 if (isset($_POST['login'])) {
     $pass = $_POST['pass'];
     $res = $db->getUser(null, $_POST['mail'], $pass);
@@ -27,6 +49,11 @@ if (isset($_POST['login'])) {
         $oldPassword = $_POST['oldPassword'];
         $pass1 = $_POST['pass1'];
         $pass2 = $_POST['pass2'];
+        if (!preg_match('~[0-9]+~', $pass1)) {
+            header('Location: ../../account.php#passNeedsNum');
+            die();
+        }
+        
         if ($oldPassword != $_SESSION['passwd']) {
             header('Location: ../../account.php#oldPassError');
         } else if ($pass1 != $pass2) {
@@ -52,7 +79,7 @@ if (isset($_POST['login'])) {
         else header('Location: ../../account.php#errorActualizando');
 
     } else if (isset($_POST['deleteUser'])) {
-        if (!$_POST['deleteSelf']) {
+        if (!isset($_POST['deleteSelf'])) {
             $deleted = $db->deleteUser($_POST['deleteUser']);
             if ($deleted) header('Location: ../../users.php#eliminado');
             else header('Location: ../../users.php#noEliminado');
@@ -60,12 +87,10 @@ if (isset($_POST['login'])) {
             $deleted = $db->deleteUser($_SESSION['id']);
             if ($deleted) header('Location: ../../index.php#eliminado');
             else header('Location: ../../account.php#noEliminado');
+            $session->destroy();
         }
     }
 } else {
     header('Location: ../../account.php#noIniciado');
 }
-
-
-
 ?>

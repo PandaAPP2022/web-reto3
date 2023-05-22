@@ -19,10 +19,11 @@
                 require_once('assets/php/DataBase.php');
                 $db = new DataBase();
                 $res = $db->getUser($_SESSION['id'], null, null);
+                $remove = '<button id="deleteSelf" onclick="deleteSelf()">Eliminar cuenta</button>';
+                if ($session->getTipo() == "gerente") $remove = '';
                 foreach ($res as $row) {
                 echo '
-                <section>
-                    <button id="deleteSelf" onclick="deleteSelf()">Eliminar cuenta</button>
+                <section>'.$remove.'
                     <button id="toggle" onclick="toggleFormLogged(this)">Cambiar contraseña</button>
                     <article id="account">
                         <form action="assets/php/requests.php" method="post">
@@ -83,6 +84,7 @@
                         <!--$name, $surname, $passwd, $mail, $tipo, $fecha-->
                         <form action="assets/php/requests.php" method="post">
                             <h3>Registro</h3>
+                            <input type="hidden" name="tipo" value="1">
                             <label>Nombre:
                                 <input tupe="text" name="name" placeholder="Usuario">
                             </label>
@@ -93,13 +95,13 @@
                                 <input placeholder="myAwesomePassword" type="password" name="pass">
                             </label>
                             <label>Correo:
-                                <input placeholder="usuario@gmail.com" required type="email" name="mail" id="">
+                                <input placeholder="usuario@gmail.com" required type="email" name="mail">
                             </label>
                             <label>Fecha de nacimiento:
                                 <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
                             </label>
                             <label>
-                                <input class="button" type="submit" name="registro" value="Crear cuenta">
+                                <input class="button" type="submit" name="createUser" value="Crear cuenta">
                             </label>
                         </form>
                     </article>

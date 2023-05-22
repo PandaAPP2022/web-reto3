@@ -1,7 +1,7 @@
 window.onload = () => {
     let btnHeader = $('.header-display')[0]
     btnHeader.addEventListener('click', displayMenu)
-    let passButton = document.getElementById('passButton')
+    let passButton = $('#passButton')[0]
     if (typeof (passButton) != 'undefined' && passButton != null) passButton.addEventListener('click', updatePassword);
     currentPage()
 }
@@ -63,11 +63,17 @@ loadScores = () => {
 loadUsers = (data) => {
     let list = $('.list');
     list.empty();
+
+    list.append($('\
+        <article class="list-item"><div class="info">\
+                <img onclick="loadUser()" class="add-icon" src="https://img.icons8.com/stickers/100/plus-math.png" alt="plus-math"/>    \
+        </div></article>'));
+
     for (let i = 0; i < data.length; i++) {
         const user = data[i];
 
         let del = "";
-        if (user['tipo'] != "gerente") del = '<img onclick = "deleteUser('+user['id']+')" class= "icons" src = "https://img.icons8.com/fluency/240/delete-sign.png" alt = "delete-sign" />'
+        if (user['tipo'] != "gerente") del = '<img data-name="'+user['mail']+'" data-user="'+user['id']+'" onclick = "deleteUser(this.dataset)" class= "icons" src = "https://img.icons8.com/fluency/240/delete-sign.png" alt = "delete-sign" />'
 
         list.append($('\
         <article class="list-item">\
@@ -85,12 +91,14 @@ loadUsers = (data) => {
 }
 loadUser = (id) => {
     let link = document.createElement('a')
-    link.href = "user.php?id="+id
+    if (id == undefined) link.href = "user.php"
+    else link.href = "user.php?id="+id
     $('main')[0].append(link);
     link.click();
 }
-deleteUser = (id) => {
-    $('#btnDelete')[0].value = id;
+deleteUser = (data) => {
+    if (!confirm('Eliminar al usuario '+data.name)) return;
+    $('#btnDelete')[0].value = data.user;
     $('#btnDelete')[0].click();
 }
 
@@ -114,8 +122,8 @@ updatePassword = () => {
 }
 
 toggleFormLogged = (btn) => {
-    const account = document.getElementById('account')
-    const password = document.getElementById('password')
+    const account = $('#account')[0]
+    const password = $('#password')[0]
     if (btn.innerText == "Cambiar contraseña") {
         btn.innerText = "Editar cuenta"
         account.style.display = 'none'
@@ -128,8 +136,8 @@ toggleFormLogged = (btn) => {
 }
 
 toggleForm = (btn) => {
-    const login = $('#login')
-    const singup = $('#singup')
+    const login = $('#login')[0]
+    const singup = $('#singup')[0]
     if (btn.innerText == "Registrarse") {
         btn.innerText = "Iniciar sesión"
         login.style.display = 'none'

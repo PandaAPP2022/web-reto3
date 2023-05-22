@@ -14,37 +14,67 @@
     <div id="wrapper">
         <?php
         require_once('assets/php/header.php');
-        require_once('assets/php/DataBase.php');
-        $db = new DataBase();
-        $res = $db->getUser($_GET['id'], null, null);
+
+        
         ?>
         <main>
             <section>
                 <button id="toggle"><a href="users.php">Atrás</a></button>
                 <article id="account">
                     <form action="assets/php/requests.php" method="post">
-                        <h3>Editar información</h3>
-                    <?php
-                    echo "<input type='hidden' name='id' value=".$_GET["id"].">";
-                    foreach ($res as $row) {
-                        echo '
-                        <label>Nombre:
-                            <input value="'.$row['Nombre'].'" required type="text" name="name" placeholder="Usuario">
-                        </label>
-                        <label>Apellido:
-                            <input value="'.$row['Apellido'].'" required type="text" name="surname" placeholder="Apellido">
-                        </label>
-                        <label>Correo:
-                            <input value="'.$row['Email'].'" required placeholder="usuario@gmail.com" type="email" name="mail">
-                        </label>
-                        <label>Fecha de nacimiento:
-                            <input value="'.$row['fecha'].'" required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
-                        </label>';
-                    }
+                        <?php
+
+                        if (isset($_GET['id'])) {
+                            require_once('assets/php/DataBase.php');
+                            $db = new DataBase();
+                            $res = $db->getUser($_GET['id'], null, null);
+
+                            echo "<h3>Editar información</h3>
+                            <input type='hidden' name='id' value=".$_GET["id"].">";
+                            foreach ($res as $row) {
+                                echo '
+                                <label>Nombre:
+                                    <input value="'.$row['Nombre'].'" required type="text" name="name" placeholder="Usuario">
+                                </label>
+                                <label>Apellido:
+                                    <input value="'.$row['Apellido'].'" required type="text" name="surname" placeholder="Apellido">
+                                </label>
+                                <label>Correo:
+                                    <input value="'.$row['Email'].'" required placeholder="usuario@gmail.com" type="email" name="mail">
+                                </label>
+                                <label>Fecha de nacimiento:
+                                    <input value="'.$row['fecha'].'" required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
+                                </label>
+                                <label>
+                                    <input class="button" type="submit" name="updateUser" value="Guardar">
+                                </label>';
+                            }
+                        } else {
+                            echo '<h3>Datos del usuario</h3>
+                                <input type="hidden" name="tipo" value="2">
+                                <label>Nombre:
+                                    <input required type="text" name="name" placeholder="Usuario">
+                                </label>
+                                <label>Apellido:
+                                    <input required type="text" name="surname" placeholder="Apellido">
+                                </label>
+                                <label>Contraseña:
+                                    <input placeholder="myAwesomePassword" type="password" name="pass">
+                                </label>
+                                <label>Correo:
+                                    <input required placeholder="usuario@gmail.com" type="email" name="mail">
+                                </label>
+                                <label>Fecha de nacimiento:
+                                    <input required id="f" type="date" placeholder="dd-mm-yyyy" name="fecha">
+                                </label>
+                                <label>
+                                    <input class="button" type="submit" name="createUser" value="Crear">
+                                </label>';
+                        }
+
+                    
                     ?>
-                        <label>
-                            <input class="button" type="submit" name="updateUser" value="Guardar">
-                        </label>
+                        
                     </form>
                 </article>
             </section>

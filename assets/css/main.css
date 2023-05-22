@@ -151,6 +151,13 @@ article.list-item {
 .options {
     align-items: center;
 }
+.add-icon {
+    align-self: center;
+    justify-self: center;
+    width: 35%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+}
 .icons {
     width: 30px!important;
     height: 30px!important;
@@ -240,6 +247,34 @@ form {
     font-size: larger;
     gap: 10px;
 }
+#quest {
+
+    max-height: 90%!important;
+}
+.question {
+    overflow-y: auto;
+}
+.question textarea {
+    width: 100%;
+    background: white;
+    color: black;
+}
+.question p {
+    place-self: center;
+}
+#respuestas {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 15px;
+}
+#respuestas input, #respuestas textarea {
+    padding: 5px;
+    min-width: calc(50% - 15px);
+    resize: none;
+}
+
+
 #singup, #password, #updatePassword, #delete {
     display: none;
 }
