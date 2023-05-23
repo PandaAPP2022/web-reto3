@@ -1,10 +1,3 @@
-<?php
-/*
-header('Access-Control-Allow-Methods: GET, POST, DELETE');
-    // Indica los encabezados permitidos.
-    header('Access-Control-Allow-Headers: Authorization');
-    http_response_code(204);*/
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,10 +19,7 @@ header('Access-Control-Allow-Methods: GET, POST, DELETE');
         <?php require_once('assets/php/header.php'); ?>
 
         <main>
-            <h3>PREGUNTAS</h3>
-
             <section class="list"></section>
-
         </main>
 
     </div>

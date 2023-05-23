@@ -143,6 +143,9 @@ article.list-item {
     padding: 10px 0;
     justify-content: space-evenly;
 }
+.info h3 {
+    overflow-y: auto;
+}
 .info, .options {
     display: flex;
     flex-direction: column;
@@ -238,7 +241,7 @@ button, .button {
 
 .indexLayout button { padding: 10px 20px; }
 
-form {
+form, #form {
     flex: 1;
     display: grid;
     overflow-y: auto;
@@ -285,7 +288,7 @@ label {
 label .button {
     place-self: center;
 }
-form input, .ctn aside input {
+form input, #form input, .ctn aside input {
     height: 25px;
     padding: 0 10px;
     color: black;

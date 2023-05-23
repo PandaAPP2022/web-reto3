@@ -1,71 +1,179 @@
-loadQuestionPage = (id) => {
-    let link = document.createElement('a')
-    if (id == undefined) link.href = "question.php"
-    else link.href = "question.php#"+id
-    $('main')[0].append(link);
-    link.click();
-}
-
-loadQuestion = (id) => {
-    $.get('http://192.168.0.180:8081/api/pregunta/'+id, function(response) {
-        loadQuestions(response.pregunta);
-    });
-}
-
-send = () => {
-    const form = document.getElementById('form')
-    let submit = document.createElement('input')
-    submit.type = 'submit'
-    submit.name = 'submit'
-    form.append(submit)
-
-    submit.click();
-}
-
+var id;
 window.onload = () => {
     let url = window.location
     if (url.href.includes("question.php")) {
-        let id = url.hash.slice(1);
+        
+        id = url.hash.slice(1);
+        $('#nuevaImagen')[0].dataset.id = id;
+        $('#nuevaImagen').on("change", () => uploadImage );
+
         $.get('http://192.168.0.180:8081/api/pregunta/'+id, function(response) {
             const pregunta = response.pregunta[0]
             const respuesta = response.respuesta[0]
+            
             $('#pregunta')[0].value = pregunta.pregunta
             $('#explicacion')[0].value = pregunta.explicacion
             $('#categoria')[0].value = pregunta.categoria
             $('#dificultad')[0].value = pregunta.dificultad
 
-            $('#nuevaImagen').on("change", function(img){ uploadFile(); });
-            
-            if (pregunta.imagen != 'Insertar imagen') $('#imagen')[0].src = pregunta.imagen
+            $('#image')[0].src = pregunta.imagen
 
-            $('#res1')[0].value = respuesta.respuesta[0]
-            $('#res2')[0].value = respuesta.respuesta[1]
-            $('#res3')[0].value = respuesta.respuesta[2]
-            $('#res4')[0].value = respuesta.respuesta[3]
+            $('.res')[0].value = respuesta.respuesta[0]
+            $('.res')[1].value = respuesta.respuesta[1]
+            $('.res')[2].value = respuesta.respuesta[2]
+            $('.res')[3].value = respuesta.respuesta[3]
+            $('#correcta')[0].value = respuesta.RespCorrecta
         });
 
-    } else {
-        $.get('http://192.168.0.180:8081/api/todo', function(response) {
-            console.log(response.pregunta);
-            loadQuestions(response.pregunta);
-        });
-    }
+    } else $.get('http://192.168.0.180:8081/api/preguntas', (response) => loadQuestions(response));
 }
 
+// CARGAR PÁGINA DE LA PREGUNTA
+loadQuestionPage = (id) => {
+    let link = document.createElement('a')
 
+    if (id == null) {
+        $.get('http://192.168.0.180:8081/api/idAlto', (response) => {
+            createQuestion();
+            link.href = "question.php#"+(response.index + 1)
+            $('main')[0].append(link);
+            link.click();
+        });
+    } else {
+        link.href = "question.php#"+id
+        $('main')[0].append(link);
+        link.click();
+    }
+}
+// INSERTAR PREGUNTA
+updateQuestion = () => {
+    var data = {
+        "pregunta": $('#pregunta')[0].value,
+        "explicacion": $('#explicacion')[0].value,
+        "imagen": $('#image')[0].src,
+        "dificultad": $('#dificultad')[0].value,
+        "categoria": $('#categoria')[0].value,
+        "respuesta": [
+            $('.res')[0].value,
+            $('.res')[1].value,
+            $('.res')[2].value,
+            $('.res')[3].value
+        ],
+        "RespCorrecta": $('#correcta')[0].value
+    }
+    var enabled = true;
+
+    Object.keys(data).forEach(function(key,index) {
+        var value = data[key];
+
+        if (key == "respuesta") {
+            for (let i = 0; i < data[key].length; i++) {
+                value = data[key][i];
+                if (value == "" || value == null || value == undefined) enabled = false
+            }
+        } else {
+            if (value == "" || value == null || value == undefined) enabled = false
+        }
+    });
+    if (!enabled) {
+        alert('Faltan datos por rellenar, por favor rellena todos los campos.');
+        return
+    }
+
+    let img = $('#image')[0]
+    const num = img.dataset.id + '_'
+    const form_data = new FormData();
+    form_data.append('questionId', num);
+
+    $.ajax({
+        url: 'assets/php/upload.php', dataType: 'text', cache: false, contentType: false, processData: false,
+        data: form_data, type: 'post',
+        success: function(response){},
+        error: (response) => console.log(response)
+    });
+
+    $.ajax({
+        url: 'http://192.168.0.180:8081/api/actualizar/'+id,
+        data: data,
+        cache: false, processData: true, type: 'PUT',
+        success: function(response){
+            console.log(response)
+            let a = document.createElement('a')
+            a.href = 'questions.php#actualizada'
+            document.getElementById('quest').append(a)
+            a.click()
+        },
+        error: (response) => console.log(response)
+    });
+}
+
+createQuestion = () => {
+    const data = {
+        "pregunta": "¿En qué año...?",
+        "explicacion":"Durante los años...",
+        "imagen":"assets/images/default.png",
+        "dificultad":1,
+        "categoria":"informatica",
+        "respuesta":[
+            "Respuesta 1",
+            "Respuesta 2",
+            "Respuesta 3",
+            "Respuesta 4"
+        ],
+        "RespCorrecta":1
+    };
+
+    $.post('http://192.168.0.180:8081/api/insertar/', data, (response) => {
+        $.get('http://192.168.0.180:8081/api/preguntas', (response) => loadQuestions(response));
+    })
+}
+deleteQuestion = (id) => {
+    $.ajax({
+        url: 'http://192.168.0.180:8081/api/borrar/'+id, dataType: 'text', cache: false, contentType: false, processData: false, type: 'DELETE',
+        success: function(response){
+            console.log(response)
+            $.get('http://192.168.0.180:8081/api/preguntas', (response) => loadQuestions(response));
+        },
+        error: (response) => console.log(response)
+    });
+}
+
+// SUBIR LA NUEVA IMAGEN
+uploadImage = (img) => {
+
+    console.log('asd');
+    const form_data = new FormData();
+    form_data.append('fileToUpload', $('#nuevaImagen').prop('files')[0]);
+
+    const num = img.dataset.id + '_tmp'
+    form_data.append('questionId', num);
+  
+    $.ajax({
+        url: 'assets/php/upload.php', dataType: 'text', cache: false, contentType: false, processData: false,
+        data: form_data, type: 'post',
+        success: function(response){
+          const jsonData = JSON.parse(response);
+          if ('name' in jsonData) document.getElementById('image').src = 'assets/images/'+jsonData.name
+          else console.log(jsonData);
+        },
+        error: (response) => console.log(response)
+    });
+}
+
+// CARGAR LA PREGUNTA/PREGUNTAS DADAS
 loadQuestions = (data) => {
-    let list = $('.list');
+    const list = $('.list');
     list.empty();
 
     list.append($('\
         <article class="list-item"><div class="info">\
-            <img onclick="loadQuestionPage()" class="add-icon" src="https://img.icons8.com/stickers/100/plus-math.png" alt="plus-math"/>    \
+            <img onclick="loadQuestionPage(null)" class="add-icon" src="https://img.icons8.com/stickers/100/plus-math.png" alt="plus-math"/>    \
         </div></article>'));
 
     for (let i = 0; i < data.length; i++) {
         const question = data[i];
 
-        let del = '<img data-id="'+question['id']+'" onclick = "deleteUser(this.dataset)" class= "icons" src = "https://img.icons8.com/fluency/240/delete-sign.png" alt = "delete-sign" />'
+        let del = '<img onclick = "deleteQuestion('+question['id']+')" class= "icons" src = "https://img.icons8.com/fluency/240/delete-sign.png" alt = "delete-sign" />'
 
         list.append($('\
         <article class="list-item">\
