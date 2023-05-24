@@ -231,6 +231,7 @@ loadQuestions = (data) => {
 
         list.append($('\
         <article class="list-item">\
+            <img class="images" src="'+question['imagen']+'">\
             <div class="info">\
                 <h3>'+ question['pregunta']+'</h3>\
                 <p>'+question['categoria']+'</p>\

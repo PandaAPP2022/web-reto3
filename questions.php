@@ -21,7 +21,7 @@
         <?php require_once('assets/php/header.php'); ?>
 
         <main>
-            <section class="list"></section>
+            <section id="questions" class="list"></section>
         </main>
 
     </div>

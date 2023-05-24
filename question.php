@@ -51,7 +51,7 @@
                             <p>Respuestas:</p>
                             <div id="respuestas">
                                 <input class="res" type="text" placeholder="Respuesta 1">
-                                <input class="res" type="text" placeholder="Respuesta 2">
+                                <input id="2" class="res" type="text" placeholder="Respuesta 2">
                                 <input class="res" type="text" placeholder="Respuesta 3">
                                 <input class="res" type="text" placeholder="Respuesta 4">
                             </div>
