@@ -9,14 +9,15 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- ALERTAS -->
+    <script src="assets/alertifyjs/alertify.min.js"></script>
+    <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
 </head>
 <body>
     <div id="wrapper">
-        <?php
-        require_once('assets/php/header.php');
 
-        
-        ?>
+        <?php require_once('assets/php/header.php'); ?>
+
         <main>
             <section>
                 <button id="toggle"><a href="users.php">Atrás</a></button>

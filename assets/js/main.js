@@ -12,6 +12,25 @@ currentPage = () => {
     for (const btn of header) {
         if (url.includes(btn.firstChild.href)) btn.classList.add('currentPage');
     }
+    $('#login').fadeIn(1000);
+    $('#account').fadeIn(1000);
+    notify();
+}
+
+notify = () => {
+    const msg = window.location.hash.slice(1);
+    if (msg == 'actualizado') alertify.success('Usuario actualizado con éxito.');
+    else if (msg == 'cerrado') alertify.success('Sesión cerrada con éxito.');
+    else if (msg == 'datosIncorrectos') alertify.error('Datos incorrectos. ¿Ha escrito su información correctamente?');
+    else if (msg == 'passNeedsNum') alertify.error('La contraseña debe contener mínimo 1 número, pruebe de nuevo.');
+    else if (msg == 'oldPassError') alertify.error('La contraseña anterior no es la correcta, prueba de nuevo.');
+    else if (msg == 'contrasenasNoIguales') alertify.error('Las contraseñas no son iguales, prueba de nuevo.');
+    else if (msg == 'usuarioCreado') alertify.success('Usuario creado correctamente.');
+    else if (msg == 'errorActualizando') alertify.error('No se pudo actualizar el usuario, pruebe de nuevo en un rato o contacte al administrador.');
+    else if (msg == 'eliminado') alertify.success('Usuario eliminado con éxito.');
+    else if (msg == 'noEliminado') alertify.error('No se pudo eliminar el usuario, pruebe de nuevo en un rato o contacte al administrador.');
+    else if (msg == 'noIniciado') alertify.error('No se ha iniciado sesión o la sesión ha caducado.');
+    else if (msg == 'actualizada') alertify.success('Pregunta actualizada con éxito.');
 }
 
 function displayMenu() {
@@ -21,9 +40,10 @@ function displayMenu() {
 
     const header = $('.header')[0]
     if (header.style.display != 'flex') {
+        $('.header').fadeIn(1000)
         header.style.display = 'flex';
     } else {
-        header.style.display = 'none';
+        $('.header').fadeOut(1000)
     }
 }
 
@@ -37,6 +57,8 @@ requestUsers = (data) => {
 loadScores = () => {
     let list = $('.list');
     list.empty();
+
+    list.fadeIn(1000);
 
     $.post('assets/php/getScores.php' ,function (response) {
         const jsonData = JSON.parse(response);
@@ -61,8 +83,15 @@ loadScores = () => {
 }
 
 loadUsers = (data) => {
+    let aside = $('aside');
     let list = $('.list');
     list.empty();
+
+    aside.fadeIn(3000);
+    list.fadeIn(3000);
+
+    aside[0].style.display = 'grid';
+    list[0].style.display = 'grid';
 
     list.append($('\
         <article class="list-item"><div class="info">\
@@ -108,17 +137,32 @@ logout = () => {
 }
 
 updatePassword = () => {
-    let passwd = prompt("Please enter your old password", "Cambio de contraseña");
-    if (passwd != null) {
-        $('#oldPassword')[0].value = passwd
-        let link = document.createElement('input')
-        link.type = 'submit'
-        link.name = "updatePassword"
-        $('#passForm')[0].append(link);
-        link.click();
-    } else {
-        alert('Tienes que introducir tu contraseña.');
+    const pass1 = $('#pass1')[0].value
+    const pass2 = $('#pass2')[0].value
+    if (!pass1 || !pass2 ) return
+    if (pass1 != pass2) {
+        alertify.error('Las contraseñas no son iguales, prueba de nuevo.');
+        return
     }
+
+    if (!/[0-9]/.test(pass1)) {
+        alertify.error('Las contraseña debe contener por lo menos 1 número, prueba de nuevo.');
+        return
+    };
+
+    alertify.prompt(
+        "Cambio de contraseña",
+        "Introduzca su antigua contraseña para confirmar el cambio a la nueva.", "",
+        (evt, passwd) => {
+            $('#oldPassword')[0].value = passwd
+            let link = document.createElement('input')
+            link.type = 'submit'
+            link.name = "updatePassword"
+            $('#passForm')[0].append(link);
+            link.click();
+        },
+        () => alertify.error('Operación cancelada.')
+    );
 }
 
 toggleFormLogged = (btn) => {
@@ -127,10 +171,12 @@ toggleFormLogged = (btn) => {
     if (btn.innerText == "Cambiar contraseña") {
         btn.innerText = "Editar cuenta"
         account.style.display = 'none'
+        $('#password').fadeIn(1500);
         password.style.display = 'grid'
     } else {
         btn.innerText = "Cambiar contraseña"
         password.style.display = 'none'
+        $('#account').fadeIn(1500);
         account.style.display = 'grid'
     }
 }
@@ -141,10 +187,12 @@ toggleForm = (btn) => {
     if (btn.innerText == "Registrarse") {
         btn.innerText = "Iniciar sesión"
         login.style.display = 'none'
+        $('#singup').fadeIn(1500);
         singup.style.display = 'grid'
     } else {
         btn.innerText = "Registrarse"
         singup.style.display = 'none'
+        $('#login').fadeIn(1500);
         login.style.display = 'grid'
     }
 }

@@ -10,9 +10,11 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/mongo.js"></script>
+    <!-- ALERTAS -->
+    <script src="assets/alertifyjs/alertify.min.js"></script>
+    <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
 </head>
 <body>
-    
     
     <div id="wrapper">
 

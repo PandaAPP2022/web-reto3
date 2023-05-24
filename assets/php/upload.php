@@ -4,8 +4,12 @@ if (!isset($_POST['questionId'])) echo json_encode(array('success' => 0, 'data' 
 $data = '';
 $target_dir = "../images/";
 
-$id = $_POST['questionId'];
-$fileName = $id . basename($_FILES["fileToUpload"]["name"]);
+
+$prefix = null;
+if (isset($_POST['tmp'])) $prefix = $_POST['tmp'] . '_tmp_';
+else if (isset($_POST['id'])) $prefix = $_POST['id'] . '_';
+
+$fileName = $prefix . basename($_FILES["fileToUpload"]["name"]);
 
 $target_file = $target_dir . $fileName;
 $uploadOk = 1;
@@ -34,15 +38,21 @@ if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg
   $uploadOk = 0;
 }
 
-
+/*
 if (!strpos($id, 'tmp')) {
   $oldImage = glob($target_dir.$id.'*')[0];
   if ($oldImage) {
     unlink($target_dir . $oldImage);
   }
+}*/
+
+// delete old ones
+$oldImage = glob($target_dir.$prefix.'*');
+foreach ($oldImage as $img) {
+  unlink($target_dir . $img);
 }
 
-// Check if file already exists to delete the old one
+
 
 
 

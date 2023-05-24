@@ -9,11 +9,11 @@ class DataBase {
   private $conn = null;
   
   function __construct() {
-    $servername = "192.168.0.129"; // CLASE
-    //$servername = "192.168.1.137"; // CASA
+    //$servername = "192.168.0.129"; // CLASE
+    $servername = "192.168.1.137"; // CASA
     $username = "admin";
-    $password = "Almi123"; // CLASE
-    //$password = "Almi123+"; // CASA
+    //$password = "Almi123"; // CLASE
+    $password = "Almi123+"; // CASA
     $db = "photoplay";
     
     try {
@@ -46,7 +46,7 @@ class DataBase {
   /***** USUARIOS *****/
   function getUser($id, $mail, $passwd) {
     $res = null;
-    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
+    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contrasena= ?';
     $data = array($mail, $passwd);
     if ($id != null) {
       $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE idUsuario= ?';

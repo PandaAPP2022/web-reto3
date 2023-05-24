@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- ALERTAS -->
+    <script src="assets/alertifyjs/alertify.min.js"></script>
+    <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
 </head>
 <body>
     <div id="wrapper">
@@ -50,11 +53,11 @@
                             <h3>Cambiar contraseña</h3>
                             <label>
                                 Nueva contraseña:
-                                <input required type="password" name="pass1">
+                                <input id="pass1" required type="password" name="pass1">
                             </label>
                             <label>
                                 Escribe de nuevo:
-                                <input required type="password" name="pass2">
+                                <input id="pass2" required type="password" name="pass2">
                             </label>
                             <input id="passButton" class="button" type="button" value="Cambiar contraseña">
                             <input id="oldPassword" type="hidden" name="oldPassword">

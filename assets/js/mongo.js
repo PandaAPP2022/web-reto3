@@ -1,5 +1,6 @@
 var id;
 window.onload = () => {
+    currentPage()
     let url = window.location
     if (url.href.includes("question.php")) {
         
@@ -81,27 +82,27 @@ updateQuestion = () => {
     }
 
     let img = $('#image')[0]
-    const num = img.dataset.id + '_'
     const form_data = new FormData();
-    form_data.append('questionId', num);
+    form_data.append('fileToUpload', $('#nuevaImagen').prop('files')[0]);
+    form_data.append('id', img.dataset.id);
 
     $.ajax({
         url: 'assets/php/upload.php', dataType: 'text', cache: false, contentType: false, processData: false,
         data: form_data, type: 'post',
-        success: function(response){},
-        error: (response) => console.log(response)
-    });
-
-    $.ajax({
-        url: 'http://192.168.0.180:8081/api/actualizar/'+id,
-        data: data,
-        cache: false, processData: true, type: 'PUT',
-        success: function(response){
-            console.log(response)
-            let a = document.createElement('a')
-            a.href = 'questions.php#actualizada'
-            document.getElementById('quest').append(a)
-            a.click()
+        success: function (response) {
+            $.ajax({
+                url: 'http://192.168.0.180:8081/api/actualizar/'+id,
+                data: data,
+                cache: false, processData: true, type: 'PUT',
+                success: function(response){
+                    console.log(response)
+                    let a = document.createElement('a')
+                    a.href = 'questions.php#actualizada'
+                    document.getElementById('quest').append(a)
+                    a.click()
+                },
+                error: (response) => console.log(response)
+            });
         },
         error: (response) => console.log(response)
     });
@@ -132,7 +133,10 @@ deleteQuestion = (id) => {
         url: 'http://192.168.0.180:8081/api/borrar/'+id, dataType: 'text', cache: false, contentType: false, processData: false, type: 'DELETE',
         success: function(response){
             console.log(response)
-            $.get('http://192.168.0.180:8081/api/preguntas', (response) => loadQuestions(response));
+            $.get('http://192.168.0.180:8081/api/preguntas', (response) => {
+                alertify.success('Pregunta eliminada correctamente.');
+                loadQuestions(response)
+            });
         },
         error: (response) => console.log(response)
     });
@@ -144,9 +148,7 @@ uploadImage = (img) => {
     console.log('asd');
     const form_data = new FormData();
     form_data.append('fileToUpload', $('#nuevaImagen').prop('files')[0]);
-
-    const num = img.dataset.id + '_tmp'
-    form_data.append('questionId', num);
+    form_data.append('tmp', img.dataset.id);
   
     $.ajax({
         url: 'assets/php/upload.php', dataType: 'text', cache: false, contentType: false, processData: false,
@@ -164,6 +166,9 @@ uploadImage = (img) => {
 loadQuestions = (data) => {
     const list = $('.list');
     list.empty();
+
+    list.fadeOut();
+    list.fadeIn(1000);
 
     list.append($('\
         <article class="list-item"><div class="info">\

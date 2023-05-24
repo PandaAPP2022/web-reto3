@@ -57,7 +57,7 @@ if (isset($_POST['login'])) {
         if ($oldPassword != $_SESSION['passwd']) {
             header('Location: ../../account.php#oldPassError');
         } else if ($pass1 != $pass2) {
-            header('Location: ../../account.php#contraseñasNoIguales');
+            header('Location: ../../account.php#contrasenasNoIguales');
         } else {
             $id = $session->getId();
             $updated = $db->updatePassword($id, $pass1);

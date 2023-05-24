@@ -10,6 +10,9 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/mongo.js"></script>
+    <!-- ALERTAS -->
+    <script src="assets/alertifyjs/alertify.min.js"></script>
+    <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
 </head>
 <body>
     <div id="wrapper">
@@ -20,45 +23,45 @@
             <section id="quest">
                 <button id="toggle"><a href="questions.php">Atrás</a></button>
                 <article id="account" class="question">
-                <div id="form">
-                    <h3>Editar pregunta</h3>
-                    <label>
-                        Imagen:
-                        <img id="image" src="" alt="">
-                        Cambiar imagen:
-                        <input id="nuevaImagen" onchange="uploadImage(this)" type="file" name="fileToUpload" accept="image/png, image/jpeg">
-                    </label>
-                    <label>Pregunta:
-                        <textarea id="pregunta" placeholder="¿En que año...?" cols="50" rows="10"></textarea>
-                    </label>
-                    <label>Explicación:
-                        <textarea id="explicacion" placeholder="Durante los años xxxx y xxxx..." cols="50" rows="10"></textarea>
-                    </label>
-                    <label>Categoría:
-                        <input id="categoria" placeholder="informática" type="text">
-                    </label>
-                    <label>Dificultad:
-                        <input id="dificultad" type="number" min="1" max="3" placeholder="1">
-                    </label>
-                    <label style="place-self: unset; width: 100%;">
-                        <p>Respuestas:</p>
-                        <div id="respuestas">
-                            <input class="res" type="text" placeholder="Respuesta 1">
-                            <input class="res" type="text" placeholder="Respuesta 2">
-                            <input class="res" type="text" placeholder="Respuesta 3">
-                            <input class="res" type="text" placeholder="Respuesta 4">
-                        </div>
+                    <div id="form">
+                        <h3>Editar pregunta</h3>
+                        <label>
+                            Imagen:
+                            <img id="image" src="" alt="">
+                            Cambiar imagen:
+                            <input id="nuevaImagen" onchange="uploadImage(this)" type="file" name="fileToUpload" accept="image/png, image/jpeg">
+                        </label>
+                        <label>Pregunta:
+                            <textarea id="pregunta" placeholder="¿En que año...?" cols="50" rows="10"></textarea>
+                        </label>
+                        <label>Explicación:
+                            <textarea id="explicacion" placeholder="Durante los años xxxx y xxxx..." cols="50" rows="10"></textarea>
+                        </label>
+                        <label>Categoría:
+                            <input id="categoria" placeholder="informática" type="text">
+                        </label>
+                        <label>Dificultad:
+                            <input id="dificultad" type="number" min="1" max="3" placeholder="1">
+                        </label>
+                        <label style="place-self: unset; width: 100%;">
+                            <p>Respuestas:</p>
+                            <div id="respuestas">
+                                <input class="res" type="text" placeholder="Respuesta 1">
+                                <input class="res" type="text" placeholder="Respuesta 2">
+                                <input class="res" type="text" placeholder="Respuesta 3">
+                                <input class="res" type="text" placeholder="Respuesta 4">
+                            </div>
 
-                    </label>
-                    <label>
-                        Respuesta correcta:
-                        <input id="correcta" required type="number" min="1" max="4" placeholder="1">
-                    </label>
-                        
-                    <label>
-                        <button id="send" onclick="updateQuestion()" class="button">Guardar</button>
-                    </label>
-                </form>
+                        </label>
+                        <label>
+                            Respuesta correcta:
+                            <input id="correcta" required type="number" min="1" max="4" placeholder="1">
+                        </label>
+                            
+                        <label>
+                            <button id="send" onclick="updateQuestion()" class="button">Guardar</button>
+                        </label>
+                    </form>
                 </article>
             </section>
         </main>
