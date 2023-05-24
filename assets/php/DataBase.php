@@ -5,15 +5,19 @@ $pass = "almi123";
 $mail = "hola";
 $pass = "hola";
 */
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 class DataBase {
   private $conn = null;
   
   function __construct() {
-    //$servername = "192.168.0.129"; // CLASE
-    $servername = "192.168.1.137"; // CASA
+    $servername = "192.168.0.129"; // CLASE
+    //$servername = "192.168.1.137"; // CASA
     $username = "admin";
-    //$password = "Almi123"; // CLASE
-    $password = "Almi123+"; // CASA
+    $password = "Almi123"; // CLASE
+    //$password = "Almi123+"; // CASA
     $db = "photoplay";
     
     try {
@@ -46,7 +50,7 @@ class DataBase {
   /***** USUARIOS *****/
   function getUser($id, $mail, $passwd) {
     $res = null;
-    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contrasena= ?';
+    $sql = 'SELECT idUsuario, Nombre, Apellido, tipo, fecha FROM Usuario WHERE Email= ? AND Contraseña= ?';
     $data = array($mail, $passwd);
     if ($id != null) {
       $sql = 'SELECT idUsuario, Nombre, Apellido, Email, tipo, fecha FROM Usuario WHERE idUsuario= ?';
@@ -123,10 +127,12 @@ class DataBase {
     $sql = "UPDATE Usuario SET Contraseña= ? WHERE idUsuario= ?";
     $data = array($newPassword, $id);
     try {
-      $this->execute($sql, $data);
+      $query = $this->conn->prepare($sql);
+      $query->execute($data);
+      return true;
     } catch(PDOException $e) {
+      return $e;
     }
-    return true;
   }
 
   // BORRAR
@@ -177,10 +183,18 @@ class DataBase {
 
   /***** PUNTUACIONES *****/
   function getScores() {
-    $sql = 'SELECT Usuario.idUsuario, Usuario.Nombre, Usuario.Apellido, Registro.Puntuacion, Registro.Fecha
+    /*$sql = 'SELECT Usuario.idUsuario, Usuario.Nombre, Usuario.Apellido, Registro.Puntuacion, Registro.Fecha
         FROM Usuario
         INNER JOIN Registro ON Usuario.idUsuario = Registro.idUsuario
-        ORDER BY Registro.Puntuacion DESC';
+        ORDER BY Registro.Puntuacion DESC';*/
+    
+    $sql = 'SELECT Usuario.Nombre, Usuario.Apellido, Registro.Puntuacion, Registro.Fecha
+    FROM Usuario
+    INNER JOIN Registro ON Usuario.idUsuario = Registro.idUsuario
+    WHERE Usuario.tipo = 1
+    AND Registro.puntuacion > (SELECT AVG(puntuacion) FROM Registro)
+    ORDER BY Registro.puntuacion DESC';
+    
     try {
       return $this->conn->query($sql, PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

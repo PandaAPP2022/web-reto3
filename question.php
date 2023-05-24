@@ -21,7 +21,7 @@
         ?>
         <main>
             <section id="quest">
-                <button id="toggle"><a href="questions.php">Atrás</a></button>
+                <button onclick="toggle()" id="toggle">Atrás</button>
                 <article id="account" class="question">
                     <div id="form">
                         <h3>Editar pregunta</h3>
@@ -38,7 +38,7 @@
                             <textarea id="explicacion" placeholder="Durante los años xxxx y xxxx..." cols="50" rows="10"></textarea>
                         </label>
                         <label>Categoría:
-                            <input id="categoria" placeholder="informática" type="text">
+                            <input id="categoria" placeholder="esp" type="text">
                         </label>
                         <label>Dificultad:
                             <input id="dificultad" type="number" min="1" max="3" placeholder="1">

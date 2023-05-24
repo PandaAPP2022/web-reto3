@@ -360,7 +360,7 @@ form input, #form input, .ctn aside input {
     }
 }
 
-.ajs-header, .alertify p, .alertify input {
+.ajs-header, .alertify p, .alertify input, .ajs-content {
     color: black;
 }
 

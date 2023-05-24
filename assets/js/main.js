@@ -72,7 +72,7 @@ loadScores = () => {
                     <div class="info">\
                         <h4>'+(i+1)+") "+ user['name']+" "+user['surname']+'</h4>\
                     </div>\
-                    <div class="options">\
+                    <div class="options" style="padding: 10px;">\
                         <p>'+user['score']+'</p>\
                         <p>'+user['fecha']+'</p>\
                     </div>\
@@ -126,9 +126,15 @@ loadUser = (id) => {
     link.click();
 }
 deleteUser = (data) => {
-    if (!confirm('Eliminar al usuario '+data.name)) return;
-    $('#btnDelete')[0].value = data.user;
-    $('#btnDelete')[0].click();
+    alertify.confirm('Eliminar usuario',"¿Estás seguro de que quieres eliminar al usuario "+data.name,
+    () => {
+        $('#btnDelete')[0].value = data.user;
+        $('#btnDelete')[0].click()
+    },
+    () => {
+        alertify.error('Operación cancelada');
+        return
+    });
 }
 
 
@@ -198,22 +204,28 @@ toggleForm = (btn) => {
 }
 
 deleteSelf = () => {
-    if (!confirm("¿Estás seguro de que quieres eliminar tu cuenta?\nSe borrarán todos tus datos.")) return;
-    let form = document.createElement('form')
-    form.action = "assets/php/requests.php"
-    form.method = 'post'
+    alertify.confirm("¿Estás seguro de que quieres eliminar tu cuenta? Se borrarán todos tus datos.",
+    () => {
+        let form = document.createElement('form')
+        form.action = "assets/php/requests.php"
+        form.method = 'post'
 
-    let btn = document.createElement('input')
-    btn.type = 'submit'
-    btn.name = 'deleteUser'
+        let btn = document.createElement('input')
+        btn.type = 'submit'
+        btn.name = 'deleteUser'
 
-    let self = document.createElement('input')
-    self.type = 'hidden'
-    self.name = 'deleteSelf'
-    
-    $('section')[0].append(form)
-    form.append(btn)
-    form.append(self)
-    
-    btn.click();
+        let self = document.createElement('input')
+        self.type = 'hidden'
+        self.name = 'deleteSelf'
+        
+        $('section')[0].append(form)
+        form.append(btn)
+        form.append(self)
+        
+        btn.click();
+    },
+    () => {
+        alertify.error('Operación cancelada');
+        return
+    });
 }

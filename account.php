@@ -73,10 +73,10 @@
                         <form action="assets/php/requests.php" method="post">
                             <h3>Iniciar sesión</h3>
                             <label>Correo:
-                                <input type="email" name="mail" value="ppaquensen@gmail.com">
+                                <input type="email" name="mail">
                             </label>
                             <label>Contraseña:
-                                <input type="password" name="pass" value="almi123">
+                                <input type="password" name="pass">
                             </label>
                             <label>
                                 <input class="button" type="submit" name="login" value="Iniciar">

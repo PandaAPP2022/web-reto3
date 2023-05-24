@@ -1,6 +1,4 @@
 <?php
-if (!isset($_POST['questionId'])) echo json_encode(array('success' => 0, 'data' => 'Id not provided'));
-
 $data = '';
 $target_dir = "../images/";
 
@@ -38,23 +36,11 @@ if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg
   $uploadOk = 0;
 }
 
-/*
-if (!strpos($id, 'tmp')) {
-  $oldImage = glob($target_dir.$id.'*')[0];
-  if ($oldImage) {
-    unlink($target_dir . $oldImage);
-  }
-}*/
-
-// delete old ones
 $oldImage = glob($target_dir.$prefix.'*');
 foreach ($oldImage as $img) {
   unlink($target_dir . $img);
 }
-
-
-
-
+//echo json_encode(array('success' => 0, 'data' => $data, 'target' => $target_file));
 
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
