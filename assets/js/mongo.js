@@ -57,10 +57,9 @@ loadQuestionPage = (id) => {
 
     if (id == null) {
         $.get('http://192.168.0.180:8081/api/idAlto', (response) => {
-            createQuestion();
             link.href = "question.php#"+(response.index + 1)
             $('main')[0].append(link);
-            link.click();
+            createQuestion(link);
         });
     } else {
         link.href = "question.php#"+id
@@ -159,7 +158,7 @@ updateQuestion = () => {
     }
 }
 
-createQuestion = () => {
+createQuestion = (link) => {
     const data = {
         "pregunta": "",
         "explicacion":"",
@@ -176,7 +175,7 @@ createQuestion = () => {
     };
 
     $.post('http://192.168.0.180:8081/api/insertar/', data, (response) => {
-        $.get('http://192.168.0.180:8081/api/preguntas', (response) => loadQuestions(response));
+        link.click();
     })
 }
 deleteQuestion = (id) => {

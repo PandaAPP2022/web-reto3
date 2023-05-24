@@ -39,6 +39,10 @@
                         </label>
                         <label>Categoría:
                             <input id="categoria" placeholder="esp" type="text">
+                            <!--<select name="select">
+                                <option value="Español">Español</option>
+                                <option value="Ingles" selected>Ingles</option>
+                            </select>-->
                         </label>
                         <label>Dificultad:
                             <input id="dificultad" type="number" min="1" max="3" placeholder="1">
