@@ -15,6 +15,21 @@
     color: inherit;
     color: whitesmoke;
     text-decoration-line: none;
+    /* ANTI-DRAG */
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+img {
+    /* ANTI-DRAG */
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
 }
 /* FULL SCREEN */
 html {
@@ -218,8 +233,9 @@ article {
 }
 
 article img {
+    border-radius: 30px 30px;
     width: 500px;
-    aspect-ratio: 3/2;
+    aspect-ratio: 4/2;
     background: #454fac;
 }
 button, .button {
@@ -374,6 +390,9 @@ form input, #form input, .ctn aside input {
     section.list {
         max-width: 600px;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))!important;
+    }
+    article img {
+        max-width: 400px;
     }
 }
 

@@ -87,8 +87,8 @@ loadUsers = (data) => {
     let list = $('.list');
     list.empty();
 
-    aside.fadeIn(3000);
-    list.fadeIn(3000);
+    aside.fadeIn(1000);
+    list.fadeIn(1000);
 
     aside[0].style.display = 'grid';
     list[0].style.display = 'grid';

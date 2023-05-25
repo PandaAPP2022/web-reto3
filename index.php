@@ -29,8 +29,8 @@
                     <li>¡Usa objetos para no perder vidas!</li>
                     <li>¡Se el mejor en la clasificación!</li>
                 </ul>
-                <img src="assets/img/logo.png" alt="">
-                <button>DESCARGAR</button>
+                <img src="assets/img/portada.png" alt="">
+                <button onclick='window.location.href="https://drive.google.com/file/d/1wbHB_VZ_d8bHvoWkCfFxtcHiUtVxOVuz/view?usp=share_link"'>DESCARGAR</button>
             </article>
         </main>
 
